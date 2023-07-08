@@ -5,6 +5,8 @@ import { authMiddleware } from "../middlewares";
 
 const router = Router();
 
+router.get("/", authMiddleware.checkAccessToken, typeOfItemController.getAll);
+
 router.post("/", authMiddleware.checkAccessToken, typeOfItemController.create);
 
 // router.get(
@@ -31,4 +33,4 @@ router.post("/", authMiddleware.checkAccessToken, typeOfItemController.create);
 //   carMiddleware.getByIdAndThrow,
 //   carController.delete
 // );
-export const typeItemRouter = router;
+export const categoryRouter = router;

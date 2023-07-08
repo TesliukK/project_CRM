@@ -1,8 +1,9 @@
 import { Types } from "mongoose";
 
+import { ICategory } from "./category.types";
+
 export interface IItem {
   _id?: Types.ObjectId;
-  categoryOfItemSchema: ICategoryOfItemSchema;
   nameItem: string;
   brand: string;
   size: string;
@@ -10,8 +11,6 @@ export interface IItem {
   color: string;
   material: string;
   season: string;
-}
-export interface ICategoryOfItemSchema {
-  _id?: Types.ObjectId;
-  name: string;
+  count: number;
+  category: ICategory;
 }

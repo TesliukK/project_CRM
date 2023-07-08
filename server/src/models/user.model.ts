@@ -5,10 +5,15 @@ import { IUser } from "../types";
 
 const userSchema = new Schema(
   {
-    name: {
+    firstName: {
       type: String,
       index: true,
       required: [true, "Ім'я є обов'язковим"],
+    },
+    secondName: {
+      type: String,
+      index: true,
+      required: [true, "Призвіще є обов'язковим"],
     },
     phone: {
       type: String,
@@ -28,6 +33,7 @@ const userSchema = new Schema(
       required: [true, "Пароль є обов'язковим"],
     },
     address: {
+      region: { type: String },
       city: { type: String },
       postOffice: { type: String },
     },

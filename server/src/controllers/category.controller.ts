@@ -1,21 +1,29 @@
 import { NextFunction, Request, Response } from "express";
 
-import { typeItemService } from "../services";
-import {
-  ICategoryOfItemSchema,
-  ICommonResponse,
-  ITokenPayload,
-} from "../types";
+import { categoryService } from "../services";
+import { ICategory, ICommonResponse } from "../types";
 
 class TypeOfItemController {
+  public async getAll(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<ICategory[]>> {
+    try {
+      const category = await categoryService.getAll();
+
+      return res.json(category);
+    } catch (e) {
+      next(e);
+    }
+  }
   public async create(
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<Response<ICommonResponse<ICategoryOfItemSchema>>> {
+  ): Promise<Response<ICommonResponse<ICategory>>> {
     try {
-      const { _id } = req.res.locals.jwtPayload as ITokenPayload;
-      const type = await typeItemService.create(req.body, _id);
+      const type = await categoryService.create(req.body);
 
       return res.status(201).json(type);
     } catch (e) {

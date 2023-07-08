@@ -10,11 +10,12 @@ import { ItemValidator } from "../validators/item.validator";
 
 const router = Router();
 
+router.get("/", itemController.getAll);
+
 router.post(
   "/",
   authMiddleware.checkAccessToken,
   commonMiddleware.isBodyValid(ItemValidator.createItem),
-  itemMiddleware.getByIdAndThrow,
   itemController.create
 );
 

@@ -10,6 +10,8 @@ export class ItemValidator {
   private static color = Joi.string().min(2).max(50).trim();
   private static material = Joi.string().min(2).max(50).trim();
   private static season = Joi.valid(...Object.values(EItemSeasonEnum));
+  private static count = Joi.number().min(1).max(100000);
+  private static categoryId = Joi.string().trim().required();
   static createItem = Joi.object({
     nameItem: this.nameItem.required(),
     brand: this.brand.required(),
@@ -18,6 +20,8 @@ export class ItemValidator {
     color: this.color.required(),
     material: this.material.required(),
     season: this.season.required(),
+    count: this.count.required(),
+    categoryId: this.categoryId,
   });
 
   static updateItem = Joi.object({

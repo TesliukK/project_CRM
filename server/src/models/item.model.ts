@@ -1,20 +1,7 @@
-import { model, Schema, Types } from "mongoose";
+import { model, Schema } from "mongoose";
 
 import { EItemSeasonEnum } from "../enums";
-import { ICategoryOfItemSchema, IItem } from "../types";
-
-const CategoryOfItemSchema = new Schema({
-  nameOfType: {
-    type: String,
-    trim: true,
-    required: true,
-  },
-});
-
-export const CategoryOfItem = model<ICategoryOfItemSchema>(
-  "typeOfItemSchema",
-  CategoryOfItemSchema
-);
+import { IItem } from "../types";
 
 const itemSchema = new Schema(
   {
@@ -51,9 +38,14 @@ const itemSchema = new Schema(
       enum: EItemSeasonEnum,
       required: true,
     },
-    typeOfItemSchema: {
-      type: Types.ObjectId,
-      ref: CategoryOfItem,
+    count: {
+      type: Number,
+      required: true,
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
     },
   },
   {

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "../errors";
-import { CategoryOfItem } from "../models";
+import { Category } from "../models";
 
 class CategoryMiddleware {
   public async getByIdAndThrow(
@@ -12,7 +12,7 @@ class CategoryMiddleware {
     try {
       const { typeId } = req.params;
 
-      const type = await CategoryOfItem.findById(typeId);
+      const type = await Category.findById(typeId);
 
       if (!type) {
         return next(new ApiError("Not found", 422));

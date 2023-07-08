@@ -1,23 +1,37 @@
 import { NextFunction, Request, Response } from "express";
 
 import { itemService } from "../services";
-import { ICommonResponse, IItem, ITokenPayload } from "../types";
+import { ICommonResponse, IItem, IQuery } from "../types";
 
 class ItemController {
+  public async getAll(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<IItem[]>> {
+    try {
+      const items = await itemService.getWithPagination(req.query as IQuery);
+
+      return res.json(items);
+    } catch (e) {
+      next(e);
+    }
+  }
   public async create(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response<ICommonResponse<IItem>>> {
     try {
-      const { _id } = req.res.locals.jwtPayload as ITokenPayload;
-      const item = await itemService.create(req.body, _id);
+      const { categoryId } = req.body;
+      const item = await itemService.create(req.body, categoryId);
 
       return res.status(201).json(item);
     } catch (e) {
       next(e);
     }
   }
+
   public async getById(
     req: Request,
     res: Response,

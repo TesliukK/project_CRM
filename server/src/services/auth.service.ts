@@ -16,9 +16,9 @@ class AuthService {
         password: hashedPassword,
       });
 
-      await Promise.all([
-        emailService.sendMail(body.email, EEmailActions.WELCOME),
-      ]);
+      // await Promise.all([
+      //   emailService.sendMail(body.email, EEmailActions.WELCOME),
+      // ]);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -40,7 +40,7 @@ class AuthService {
 
       const tokenPair = tokenService.generateTokenPair({
         _id: user._id,
-        name: user.name,
+        firstName: user.firstName,
       });
 
       await Token.create({
@@ -60,7 +60,7 @@ class AuthService {
     try {
       const tokenPair = tokenService.generateTokenPair({
         _id: jwtPayload._id,
-        name: jwtPayload.name,
+        firstName: jwtPayload.firstName,
       });
 
       await Promise.all([

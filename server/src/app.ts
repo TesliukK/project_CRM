@@ -4,14 +4,20 @@ import mongoose from "mongoose";
 import { configs } from "./configs";
 import { cronRunner } from "./crons";
 import { ApiError } from "./errors";
-import { authRouter, itemRouter, userRouter } from "./routers";
-import { typeItemRouter } from "./routers/type.item.router";
+import {
+  authRouter,
+  categoryRouter,
+  itemRouter,
+  subCategoryRouter,
+  userRouter,
+} from "./routers";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/type", typeItemRouter);
+app.use("/subCategories", subCategoryRouter);
+app.use("/categories", categoryRouter);
 app.use("/items", itemRouter);
 app.use("/users", userRouter);
 app.use("/auth", authRouter);

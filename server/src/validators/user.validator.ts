@@ -4,6 +4,7 @@ import { regexConstants } from "../constants";
 
 export class UserValidator {
   private static firstName = Joi.string().min(2).max(50).trim();
+  private static secondName = Joi.string().min(2).max(50).trim();
   private static email = Joi.string()
     .regex(regexConstants.EMAIL)
     .lowercase()
@@ -11,20 +12,23 @@ export class UserValidator {
   private static password = Joi.string().regex(regexConstants.PASSWORD);
   private static phone = Joi.string().regex(regexConstants.PHONE);
   private static address = Joi.object({
+    region: Joi.string().min(2).max(50).trim(),
     city: Joi.string().min(2).max(50).trim(),
     postOffice: Joi.string().min(2).max(50).trim(),
   });
 
   static createUser = Joi.object({
-    name: this.firstName.required(),
+    firstName: this.firstName.required(),
+    secondName: this.secondName.required(),
     email: this.email.required(),
     password: this.password.required(),
     phone: this.phone.required(),
-    address: this.address.required(),
+    address: this.address,
   });
 
   static updateUser = Joi.object({
-    name: this.firstName,
+    firstName: this.firstName,
+    secondName: this.secondName,
     phone: this.phone,
   });
 

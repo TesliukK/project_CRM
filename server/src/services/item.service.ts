@@ -1,13 +1,57 @@
-import { Types } from "mongoose";
-
 import { ApiError } from "../errors";
-import { Item } from "../models";
-import { IItem } from "../types";
+import { Category, Item } from "../models";
+import { IItem, IPaginationResponse, IQuery } from "../types";
 
 class ItemService {
-  public async create(data: IItem, userId: string): Promise<any> {
+  public async getWithPagination(
+    query: IQuery
+  ): Promise<IPaginationResponse<IItem>> {
     try {
-      return Item.create({ ...data, user: new Types.ObjectId(userId) });
+      const queryStr = JSON.stringify(query);
+      const queryObj = JSON.parse(
+        queryStr.replace(/\b(gte|lte|gt|lt)\b/, (match) => `$${match}`)
+      );
+
+      const {
+        page = 1,
+        limit = 5,
+        sortedBy = "createdAt",
+        ...searchObject
+      } = queryObj;
+
+      const skip = limit * (page - 1);
+
+      const items = await Item.find(searchObject)
+        .skip(skip)
+        .limit(limit)
+        .sort(sortedBy)
+        .lean();
+      const itemsTotalCount = await Item.countDocuments(searchObject);
+      return {
+        page: +page,
+        itemsCount: itemsTotalCount,
+        itemsFound: items.length,
+        perPage: +limit,
+        data: items.slice(0, limit),
+      };
+    } catch (e) {
+      throw new ApiError(e.message, e.status);
+    }
+  }
+  public async create(data: IItem, categoryId: string): Promise<any> {
+    try {
+      const category = await Category.findById(categoryId);
+
+      if (!category) {
+        throw new ApiError("Category not found", 404);
+      }
+
+      const newItem = await Item.create({
+        ...data,
+        category: category,
+      });
+
+      return newItem;
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }

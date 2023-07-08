@@ -1,0 +1,23 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Editor directories and files
+/.idea/
+
+# Node artifact files
+/dist/
+/node_modules/
+
+# Editor-based HTTP Client requests
+/httpRequests/
+
+# Datasource local storage ignored files
+/dataSource/node_modules/s/
+/dataSources.local.xml
+
+# Environment variables
+/.env
+/.env*
+
+

@@ -1,22 +1,29 @@
-import { ApiError } from "../errors";
+import { Types } from "mongoose";
+
 import { SubCategory } from "../models";
-import { ISubCategory } from "../types";
 
 class SubCategoryService {
-  public async getAll(): Promise<ISubCategory[]> {
+  public async create(
+    categoryId: Types.ObjectId,
+    subcategoryName: string
+  ): Promise<any> {
     try {
-      return SubCategory.find();
+      const subCategory = await SubCategory.create({
+        categoryId,
+        subcategoryName,
+      });
+      return subCategory;
     } catch (e) {
-      throw new ApiError(e.message, e.status);
+      throw new Error("Помилка створення підкатегорії");
     }
   }
-  public async create(data: ISubCategory): Promise<any> {
+
+  public async getByCategoryId(categoryId: Types.ObjectId): Promise<any> {
     try {
-      return SubCategory.create({
-        ...data,
-      });
+      const subCategories = await SubCategory.find({ categoryId });
+      return subCategories;
     } catch (e) {
-      throw new ApiError(e.message, e.status);
+      throw new Error("Помилка отримання підкатегорій за категорією");
     }
   }
 }

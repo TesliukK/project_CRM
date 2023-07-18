@@ -1,10 +1,14 @@
-import { Router } from "express";
+import express from "express";
 
-import { subCategoryController } from "../controllers/subCategory.controller";
+import { subCategoryController } from "../controllers";
+import { createSubCategoryMiddleware } from "../middlewares";
 
-const router = Router();
+const router = express.Router();
 
-router.get("/", subCategoryController.getAll);
-router.post("/", subCategoryController.create);
+router.post(
+  "/:categoryId/subcategories",
+  createSubCategoryMiddleware,
+  subCategoryController.createSubCategory
+);
 
 export const subCategoryRouter = router;

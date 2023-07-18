@@ -4,14 +4,9 @@ import { ICategory } from "../types";
 
 const CategorySchema = new Schema(
   {
-    name: {
+    categoryName: {
       type: String,
       trim: true,
-      required: true,
-    },
-    subCategories: {
-      type: Schema.Types.ObjectId,
-      ref: "SubCategory",
       required: true,
     },
   },

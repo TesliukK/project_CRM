@@ -3,6 +3,8 @@ import { ObjectSchema } from "joi";
 import { isObjectIdOrHexString } from "mongoose";
 
 import { ApiError } from "../errors";
+import { subCategoryService } from "../services";
+import { ISubCategory } from "../types";
 
 class CommonMiddleware {
   public isIdValid(idField: string, from: "params" | "query" = "params") {
@@ -34,3 +36,23 @@ class CommonMiddleware {
   }
 }
 export const commonMiddleware = new CommonMiddleware();
+
+export const createSubCategoryMiddleware = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { categoryId } = req.params;
+    const subCategoryData: ISubCategory = req.body;
+
+    const category = await subCategoryService.createSubCategory(
+      categoryId,
+      subCategoryData
+    );
+
+    res.status(201).json(category);
+  } catch (e) {
+    next(e);
+  }
+};

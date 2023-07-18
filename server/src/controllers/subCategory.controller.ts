@@ -1,31 +1,28 @@
 import { NextFunction, Request, Response } from "express";
-
+import { Types } from "mongoose";
 import { subCategoryService } from "../services";
-import { ICommonResponse, ISubCategory } from "../types";
 
 class SubCategoryController {
-  public async getAll(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response<ISubCategory[]>> {
+  public async create(req: Request, res: Response, next: NextFunction): Promise<any> {
     try {
-      const subCategories = await subCategoryService.getAll();
-
-      return res.json(subCategories);
+      const { categoryId, subcategoryName } = req.body;
+      const subcategory = await subCategoryService.create(
+        Types.ObjectId(categoryId),
+        subcategoryName
+      );
+      return res.status(201).json(subcategory);
     } catch (e) {
       next(e);
     }
   }
-  public async create(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response<ICommonResponse<ISubCategory>>> {
-    try {
-      const type = await subCategoryService.create(req.body);
 
-      return res.status(201).json(type);
+  public async getByCategoryId(req: Request, res: Response, next: NextFunction): Promise<any> {
+    try {
+      const { categoryId } = req.params;
+      const subcategories = await subCategoryService.getByCategoryId(
+        Types.ObjectId(categoryId)
+      );
+      return res.json(subcategories);
     } catch (e) {
       next(e);
     }

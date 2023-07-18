@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { categoryService } from "../services";
 import { ICategory, ICommonResponse } from "../types";
 
-class TypeOfItemController {
+class CategoryController {
   public async getAll(
     req: Request,
     res: Response,
@@ -32,4 +32,4 @@ class TypeOfItemController {
   }
 }
 
-export const typeOfItemController = new TypeOfItemController();
+export const categoryController = new CategoryController();

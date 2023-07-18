@@ -1,10 +1,15 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 import { ISubCategory } from "../types";
 
-const SubcategorySchema = new Schema(
+const SubCategorySchema = new Schema(
   {
-    name: {
+    categoryId: {
+      type: Types.ObjectId,
+      ref: "Category", // посилання на батьківську модель категорії
+      required: true,
+    },
+    subcategoryName: {
       type: String,
       trim: true,
       required: true,
@@ -18,5 +23,5 @@ const SubcategorySchema = new Schema(
 
 export const SubCategory = model<ISubCategory>(
   "subCategory",
-  SubcategorySchema
+  SubCategorySchema
 );

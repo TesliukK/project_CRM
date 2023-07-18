@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import { typeOfItemController } from "../controllers/category.controller";
+import { categoryController } from "../controllers";
 import { authMiddleware } from "../middlewares";
 
 const router = Router();
 
-router.get("/", authMiddleware.checkAccessToken, typeOfItemController.getAll);
+router.get("/", authMiddleware.checkAccessToken, categoryController.getAll);
 
-router.post("/", authMiddleware.checkAccessToken, typeOfItemController.create);
+router.post("/", authMiddleware.checkAccessToken, categoryController.create);
 
 // router.get(
 //   "/:carId",

@@ -1,28 +1,80 @@
 import { NextFunction, Request, Response } from "express";
-import { Types } from "mongoose";
-import { subCategoryService } from "../services";
+
+import { itemService, subCategoryService } from "../services";
+import { ICommonResponse, ISubCategory } from "../types";
 
 class SubCategoryController {
-  public async create(req: Request, res: Response, next: NextFunction): Promise<any> {
+  public async getAll(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<ISubCategory[]>> {
     try {
-      const { categoryId, subcategoryName } = req.body;
-      const subcategory = await subCategoryService.create(
-        Types.ObjectId(categoryId),
-        subcategoryName
-      );
-      return res.status(201).json(subcategory);
+      const subCategories = await subCategoryService.getAll();
+
+      return res.json(subCategories);
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async create(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<ICommonResponse<ISubCategory>>> {
+    try {
+      const { categoryId } = req.body;
+      const subCategory = await subCategoryService.create(req.body, categoryId);
+
+      return res.status(201).json(subCategory);
     } catch (e) {
       next(e);
     }
   }
 
-  public async getByCategoryId(req: Request, res: Response, next: NextFunction): Promise<any> {
+  public async getById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<ISubCategory>> {
     try {
-      const { categoryId } = req.params;
-      const subcategories = await subCategoryService.getByCategoryId(
-        Types.ObjectId(categoryId)
+      const { subCategory } = res.locals;
+      return res.json(subCategory);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async update(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<ISubCategory>> {
+    try {
+      const { params, body } = req;
+
+      const updatedSubCategory = await subCategoryService.update(
+        params.subCategoryId,
+        body
       );
-      return res.json(subcategories);
+
+      return res.status(201).json(updatedSubCategory);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public async delete(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response<void>> {
+    try {
+      const { subCategoryId } = req.params;
+
+      await itemService.delete(subCategoryId);
+
+      return res.sendStatus(204);
     } catch (e) {
       next(e);
     }

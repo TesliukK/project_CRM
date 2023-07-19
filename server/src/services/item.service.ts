@@ -46,12 +46,10 @@ class ItemService {
         throw new ApiError("Category not found", 404);
       }
 
-      const newItem = await Item.create({
+      return await Item.create({
         ...data,
         category: category,
       });
-
-      return newItem;
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }

@@ -1,14 +1,10 @@
 import express from "express";
 
 import { subCategoryController } from "../controllers";
-import { createSubCategoryMiddleware } from "../middlewares";
 
 const router = express.Router();
 
-router.post(
-  "/:categoryId/subcategories",
-  createSubCategoryMiddleware,
-  subCategoryController.createSubCategory
-);
+router.get("/", subCategoryController.getAll);
+router.post("/", subCategoryController.create);
 
 export const subCategoryRouter = router;

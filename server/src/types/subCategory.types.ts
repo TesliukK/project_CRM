@@ -1,7 +1,9 @@
 import { Types } from "mongoose";
 
+import { ICategory } from "./category.types";
+
 export interface ISubCategory {
   _id?: Types.ObjectId;
-  categoryId: Types.ObjectId;
   subcategoryName: string;
+  category: ICategory;
 }

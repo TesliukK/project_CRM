@@ -1,29 +1,57 @@
-import { Types } from "mongoose";
-
-import { SubCategory } from "../models";
+import { ApiError } from "../errors";
+import { Category, SubCategory } from "../models";
+import { ISubCategory } from "../types";
 
 class SubCategoryService {
-  public async create(
-    categoryId: Types.ObjectId,
-    subcategoryName: string
-  ): Promise<any> {
+  public async getAll(): Promise<ISubCategory[]> {
     try {
-      const subCategory = await SubCategory.create({
-        categoryId,
-        subcategoryName,
-      });
-      return subCategory;
+      return SubCategory.find();
     } catch (e) {
-      throw new Error("Помилка створення підкатегорії");
+      throw new ApiError(e.message, e.status);
+    }
+  }
+  public async create(data: ISubCategory, categoryId: string): Promise<any> {
+    try {
+      const category = await Category.findById(categoryId);
+
+      if (!category) {
+        throw new ApiError("Category not found", 404);
+      }
+
+      return await SubCategory.create({
+        ...data,
+        category: category,
+      });
+    } catch (e) {
+      throw new ApiError(e.message, e.status);
     }
   }
 
-  public async getByCategoryId(categoryId: Types.ObjectId): Promise<any> {
+  public async getById(id: string): Promise<ISubCategory> {
     try {
-      const subCategories = await SubCategory.find({ categoryId });
-      return subCategories;
+      return SubCategory.findById(id).lean();
     } catch (e) {
-      throw new Error("Помилка отримання підкатегорій за категорією");
+      throw new ApiError(e.message, e.status);
+    }
+  }
+
+  public async update(
+    subCategoryId: string,
+    data: Partial<ISubCategory>
+  ): Promise<void> {
+    try {
+      return await SubCategory.findByIdAndUpdate(subCategoryId, data, {
+        new: true,
+      });
+    } catch (e) {
+      throw new ApiError(e.message, e.status);
+    }
+  }
+  public async delete(subCategoryId: string): Promise<void> {
+    try {
+      await SubCategory.deleteOne({ _id: subCategoryId });
+    } catch (e) {
+      throw new ApiError(e.message, e.status);
     }
   }
 }

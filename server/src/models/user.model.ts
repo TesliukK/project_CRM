@@ -44,6 +44,7 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
+      enum: EUserRole,
       default: EUserRole.default,
     },
   },

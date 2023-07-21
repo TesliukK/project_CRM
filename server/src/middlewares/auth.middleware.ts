@@ -13,6 +13,7 @@ class AuthMiddleware {
   ): Promise<void> {
     try {
       const accessToken = req.get("Authorization");
+
       if (!accessToken) {
         return next(new ApiError("No token", 401));
       }

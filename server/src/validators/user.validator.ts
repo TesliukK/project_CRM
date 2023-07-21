@@ -1,6 +1,7 @@
 import * as Joi from "joi";
 
 import { regexConstants } from "../constants";
+import { EUserRole } from "../enums";
 
 export class UserValidator {
   private static firstName = Joi.string().min(2).max(50).trim();
@@ -16,6 +17,7 @@ export class UserValidator {
     city: Joi.string().min(2).max(50).trim(),
     postOffice: Joi.string().min(2).max(50).trim(),
   });
+  private static role = Joi.string().valid(EUserRole.default, EUserRole.admin);
 
   static createUser = Joi.object({
     firstName: this.firstName.required(),
@@ -24,6 +26,7 @@ export class UserValidator {
     password: this.password.required(),
     phone: this.phone.required(),
     address: this.address,
+    role: this.role,
   });
 
   static updateUser = Joi.object({

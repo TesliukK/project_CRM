@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "../errors";
-import { Item } from "../models";
+import { Items } from "../models";
 
 class ItemMiddleware {
   public async getByIdAndThrow(
@@ -12,7 +12,7 @@ class ItemMiddleware {
     try {
       const { itemId } = req.params;
 
-      const item = await Item.findById(itemId);
+      const item = await Items.findById(itemId);
 
       if (!item) {
         return next(new ApiError("Not found", 422));

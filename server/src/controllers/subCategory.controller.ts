@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
-import { itemService, subCategoryService } from "../services";
+import { subCategoryService } from "../services";
 import { ICommonResponse, ISubCategory } from "../types";
 
 class SubCategoryController {
@@ -72,7 +72,7 @@ class SubCategoryController {
     try {
       const { subCategoryId } = req.params;
 
-      await itemService.delete(subCategoryId);
+      await subCategoryService.delete(subCategoryId);
 
       return res.sendStatus(204);
     } catch (e) {

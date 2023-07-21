@@ -36,11 +36,4 @@ router.delete(
   userMiddleware.getByIdAndThrow,
   userController.delete
 );
-
-router.put(
-  "/:userId/avatar",
-  authMiddleware.checkAccessToken,
-  commonMiddleware.isIdValid("userId"),
-  userMiddleware.getByIdAndThrow
-);
 export const userRouter = router;

@@ -1,3 +1,5 @@
+import { EUserRole } from "../enums";
+
 export interface IUser {
   _id?: string;
   firstName: string;
@@ -10,7 +12,5 @@ export interface IUser {
     city: string;
     postOffice: string;
   };
-  card: [];
-  orders: [];
-  role: string;
+  role: EUserRole;
 }

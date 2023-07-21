@@ -1,5 +1,5 @@
 import { ApiError } from "../errors";
-import { Category, Item } from "../models";
+import { Category, Items } from "../models";
 import { IItem, IPaginationResponse, IQuery } from "../types";
 
 class ItemService {
@@ -21,12 +21,12 @@ class ItemService {
 
       const skip = limit * (page - 1);
 
-      const items = await Item.find(searchObject)
+      const items = await Items.find(searchObject)
         .skip(skip)
         .limit(limit)
         .sort(sortedBy)
         .lean();
-      const itemsTotalCount = await Item.countDocuments(searchObject);
+      const itemsTotalCount = await Items.countDocuments(searchObject);
       return {
         page: +page,
         itemsCount: itemsTotalCount,
@@ -46,7 +46,7 @@ class ItemService {
         throw new ApiError("Category not found", 404);
       }
 
-      return await Item.create({
+      return await Items.create({
         ...data,
         category: category,
       });
@@ -57,7 +57,7 @@ class ItemService {
 
   public async getById(id: string): Promise<IItem> {
     try {
-      return Item.findById(id).lean();
+      return Items.findById(id).lean();
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -65,14 +65,14 @@ class ItemService {
 
   public async update(itemId: string, data: Partial<IItem>): Promise<void> {
     try {
-      return await Item.findByIdAndUpdate(itemId, data, { new: true });
+      return await Items.findByIdAndUpdate(itemId, data, { new: true });
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
   }
   public async delete(itemId: string): Promise<void> {
     try {
-      await Item.deleteOne({ _id: itemId });
+      await Items.deleteOne({ _id: itemId });
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }

@@ -1,12 +1,13 @@
 import { Router } from "express";
 
-import { itemController } from "../controllers/item.controller";
+import { itemController } from "../controllers";
 import {
   authMiddleware,
   commonMiddleware,
   itemMiddleware,
+  roleMiddleware,
 } from "../middlewares";
-import { ItemValidator } from "../validators/item.validator";
+import { ItemValidator } from "../validators";
 
 const router = Router();
 
@@ -15,6 +16,7 @@ router.get("/", itemController.getAll);
 router.post(
   "/",
   authMiddleware.checkAccessToken,
+  roleMiddleware.checkAdminRole,
   commonMiddleware.isBodyValid(ItemValidator.createItem),
   itemController.create
 );

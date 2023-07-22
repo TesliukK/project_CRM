@@ -11,6 +11,7 @@ export class ItemValidator {
   private static season = Joi.valid(...Object.values(EItemSeasonEnum));
   private static count = Joi.number().min(1).max(100000);
   private static categoryId = Joi.string().trim().required();
+  private static subCategoryId = Joi.string().trim().required();
   static createItem = Joi.object({
     nameItem: this.nameItem.required(),
     size: this.size.required(),
@@ -20,6 +21,7 @@ export class ItemValidator {
     season: this.season.required(),
     count: this.count.required(),
     categoryId: this.categoryId,
+    subCategoryId: this.subCategoryId,
   });
 
   static updateItem = Joi.object({

@@ -1,10 +1,7 @@
-export interface ICartItem {
-  itemId: string;
-  quantity: number;
-}
+import { ICartItem } from "./cartItem.types";
 
 export interface ICart {
-  _id?: string;
-  userId: string;
+  _id: string;
+  user: string;
   items: ICartItem[];
 }

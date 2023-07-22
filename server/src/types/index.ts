@@ -6,3 +6,4 @@ export * from "./item.types";
 export * from "./category.types";
 export * from "./subCategory.types";
 export * from "./cart.types";
+export * from "./cartItem.types";

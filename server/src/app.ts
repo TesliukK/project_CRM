@@ -11,11 +11,13 @@ import {
   subCategoryRouter,
   userRouter,
 } from "./routers";
+import { cartRouter } from "./routers/cart.router";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/cart", cartRouter);
 app.use("/subcategories", subCategoryRouter);
 app.use("/categories", categoryRouter);
 app.use("/items", itemRouter);

@@ -1,5 +1,5 @@
 import { ApiError } from "../errors";
-import { Category, Items } from "../models";
+import { Category, Items, SubCategory } from "../models";
 import { IItem, IPaginationResponse, IQuery } from "../types";
 
 class ItemService {
@@ -38,17 +38,25 @@ class ItemService {
       throw new ApiError(e.message, e.status);
     }
   }
-  public async create(data: IItem, categoryId: string): Promise<any> {
+  public async create(
+    data: IItem,
+    categoryId: string,
+    subCategoryId: string
+  ): Promise<any> {
     try {
       const category = await Category.findById(categoryId);
-
       if (!category) {
         throw new ApiError("Category not found", 404);
       }
 
+      const subCategory = await SubCategory.findById(subCategoryId);
+      if (!subCategory) {
+        throw new ApiError("subCategory not found", 404);
+      }
       return await Items.create({
         ...data,
         category: category,
+        subCategory: subCategory,
       });
     } catch (e) {
       throw new ApiError(e.message, e.status);

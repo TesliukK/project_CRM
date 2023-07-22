@@ -1,4 +1,5 @@
 import { EUserRole } from "../enums";
+import { ICartItem } from "./cartItem.types";
 
 export interface IUser {
   _id?: string;
@@ -13,4 +14,5 @@ export interface IUser {
     postOffice: string;
   };
   role: EUserRole;
+  cart: ICartItem[];
 }

@@ -10,6 +10,11 @@ const itemSchema = new Schema(
       ref: "Category",
       required: true,
     },
+    subCategory: {
+      type: Schema.Types.ObjectId,
+      ref: "SubCategory",
+      required: true,
+    },
     nameItem: {
       type: String,
       trim: true,

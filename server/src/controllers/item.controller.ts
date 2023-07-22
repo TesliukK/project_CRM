@@ -23,8 +23,12 @@ class ItemController {
     next: NextFunction
   ): Promise<Response<ICommonResponse<IItem>>> {
     try {
-      const { categoryId } = req.body;
-      const item = await itemService.create(req.body, categoryId);
+      const { categoryId, subCategoryId } = req.body;
+      const item = await itemService.create(
+        req.body,
+        categoryId,
+        subCategoryId
+      );
 
       return res.status(201).json(item);
     } catch (e) {

@@ -24,6 +24,7 @@ router.post(
 router.get(
   "/:itemId",
   authMiddleware.checkAccessToken,
+  roleMiddleware.checkAdminRole,
   commonMiddleware.isIdValid("itemId"),
   itemMiddleware.getByIdAndThrow,
   itemController.getById
@@ -32,6 +33,7 @@ router.get(
 router.put(
   "/:itemId",
   authMiddleware.checkAccessToken,
+  roleMiddleware.checkAdminRole,
   commonMiddleware.isIdValid("itemId"),
   commonMiddleware.isBodyValid(ItemValidator.updateItem),
   itemMiddleware.getByIdAndThrow,
@@ -41,6 +43,7 @@ router.put(
 router.delete(
   "/:itemId",
   authMiddleware.checkAccessToken,
+  roleMiddleware.checkAdminRole,
   commonMiddleware.isIdValid("itemId"),
   itemMiddleware.getByIdAndThrow,
   itemController.delete

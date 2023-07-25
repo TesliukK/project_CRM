@@ -1,5 +1,5 @@
 import { ApiError } from "../errors";
-import { User } from "../models";
+import { Cart, User } from "../models";
 import { IPaginationResponse, IQuery, IUser } from "../types";
 
 class UserService {
@@ -57,7 +57,8 @@ class UserService {
 
   public async delete(userId: string): Promise<void> {
     try {
-      await User.deleteOne({ _id: userId });
+      await User.findById(userId).deleteOne({ _id: userId });
+      await Cart.deleteOne({ user: userId });
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }

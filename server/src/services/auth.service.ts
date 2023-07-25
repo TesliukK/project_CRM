@@ -16,7 +16,9 @@ class AuthService {
         password: hashedPassword,
       });
 
-      await Cart.create({ user: newUser._id, items: [] });
+      const newCart = await Cart.create({ user: newUser._id, items: [] });
+      newUser.cartId = newCart._id;
+      await newUser.save();
 
       // await Promise.all([
       //   emailService.sendMail(body.email, EEmailActions.WELCOME),

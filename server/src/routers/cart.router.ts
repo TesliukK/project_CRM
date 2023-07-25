@@ -13,10 +13,9 @@ router.get(
 
 router.post("/add", authMiddleware.checkAccessToken, cartController.addToCart);
 
-// router.delete(
-//   "/remove/:productId",
-//   authMiddleware.checkAccessToken,
-//   cartController.removeFromCart
-// );
-
+router.delete(
+  "/remove/:productId",
+  authMiddleware.checkAccessToken,
+  cartController.removeFromCart
+);
 export const cartRouter = router;

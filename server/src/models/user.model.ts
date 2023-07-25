@@ -47,12 +47,7 @@ const userSchema = new Schema(
       enum: EUserRole,
       default: EUserRole.default,
     },
-    cart: [
-      {
-        productId: { type: Schema.Types.ObjectId, ref: "Items" },
-        quantity: { type: Number, default: 1 },
-      },
-    ],
+    cartId: { type: Schema.Types.ObjectId, ref: "Cart" },
   },
   {
     versionKey: false,

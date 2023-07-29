@@ -33,9 +33,29 @@ app.use((err: ApiError, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-app.listen(configs.PORT, async () => {
-  await mongoose.connect(configs.DB_URL);
-  cronRunner();
-  // eslint-disable-next-line
-  console.log(`Server has started on PORT ${configs.PORT} 🚀🚀🚀`);
-});
+const connectionDB = async () => {
+  let dbCon = false;
+  while (!dbCon) {
+    try {
+      console.log("connecting to database...");
+      await mongoose.connect(configs.DB_URL);
+      dbCon = true;
+    } catch (e) {
+      console.log("database unavailable, wait 3 second");
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+  }
+};
+
+const start = async () => {
+  try {
+    cronRunner();
+    await connectionDB();
+    await app.listen(configs.PORT, () => configs.HOST);
+    console.log(`Server has started on PORT ${configs.PORT} 🚀🚀🚀`);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+start();

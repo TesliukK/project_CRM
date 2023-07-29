@@ -45,12 +45,11 @@ class CartController {
   ): Promise<Response<ICartItem[]>> {
     try {
       const { tokenInfo } = res.locals;
-      const { productId } = req.params;
-
+      // const { productId } = req.params;
       // Викликаємо метод removeFromCart з сервісу
       const cartItems = await cartService.removeFromCart(
-        tokenInfo._user_id,
-        productId
+        tokenInfo._user_id
+        // productId
       );
 
       return res.json(cartItems);

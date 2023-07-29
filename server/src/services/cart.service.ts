@@ -33,7 +33,7 @@ class CartService {
 
   public async removeFromCart(
     userId: string,
-    productId: string
+    // productId: string
   ): Promise<ICartItem[]> {
     try {
       const cart = await Cart.findOne({ user: userId });
@@ -42,20 +42,17 @@ class CartService {
         throw new ApiError("Користувача з таким ID не знайдено", 404);
       }
 
-      // Знаходимо індекс продукту з productId у масиві items
-      const itemIndex = cart.items.findIndex(
-        (item) => item.productId.toString() === productId
-      );
+      const itemIndex = cart.items.findIndex((item) => item.productId.toString);
       console.log(itemIndex);
+      // if (itemIndex !== -1) {
+      //   // Знайдено елемент, ви можете його видалити
+      //   cart.items.splice(itemIndex, 1);
+      //   await cart.save();
+      // } else {
+      //   // Елемент не знайдено, можна обробити цей випадок, як вам зручно
+      //   // Наприклад, повернути помилку або повідомлення, що товар не знайдено.
+      // }
 
-      if (itemIndex !== -1) {
-        // Видаляємо продукт з масиву items за допомогою методу splice()
-        cart.items.splice(itemIndex, 1);
-      } else {
-        throw new ApiError("Продукт не знайдено у корзині", 404);
-      }
-
-      await cart.save();
       return cart.items;
     } catch (e) {
       throw new ApiError(e.message, e.status);

@@ -10,6 +10,7 @@ const Item: FC<IProps> = ({ item }) => {
   const { _id, nameItem, color, count, material, price, size } = item;
   return (
     <div>
+      <p>Items list</p>
       <div>_id: {_id}</div>
       <div>nameItem: {nameItem}</div>
       <div>color: {color}</div>

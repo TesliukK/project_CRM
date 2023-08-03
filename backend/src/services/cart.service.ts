@@ -32,7 +32,7 @@ class CartService {
   }
 
   public async removeFromCart(
-    userId: string,
+    userId: string
     // productId: string
   ): Promise<ICartItem[]> {
     try {

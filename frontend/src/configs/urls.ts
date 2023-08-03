@@ -1,4 +1,4 @@
-const baseURL = "/api/v1";
+const baseURL = "/api";
 
 const items = "/items";
 const urls = {

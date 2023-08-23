@@ -1,6 +1,6 @@
 import { EActionTokenType, EEmailActions, EUserStatus } from "../enums";
 import { ApiError } from "../errors";
-import { Action, Cart, OldPassword, Token, User } from "../models";
+import { Action, OldPassword, Token, User } from "../models";
 import { ICredentials, ITokenPair, ITokenPayload, IUser } from "../types";
 import { emailService } from "./email.service";
 import { passwordService } from "./password.service";
@@ -11,14 +11,14 @@ class AuthService {
     try {
       const { password } = body;
       const hashedPassword = await passwordService.hash(password);
-      const newUser = await User.create({
+       await User.create({
         ...body,
         password: hashedPassword,
       });
 
-      const newCart = await Cart.create({ user: newUser._id, items: [] });
-      newUser.cartId = newCart._id;
-      await newUser.save();
+      // const newCart = await Cart.create({ user: newUser._id, items: [] });
+      // newUser.cartId = newCart._id;
+      // await newUser.save();
 
       // await Promise.all([
       //   emailService.sendMail(body.email, EEmailActions.WELCOME),
@@ -66,7 +66,6 @@ class AuthService {
         _id: jwtPayload._id,
         firstName: jwtPayload.firstName,
       });
-
       await Promise.all([
         Token.create({ _user_id: jwtPayload._id, ...tokenPair }),
         Token.deleteOne({ refreshToken: tokenInfo.refreshToken }),

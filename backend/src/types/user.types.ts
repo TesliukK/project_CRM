@@ -7,11 +7,6 @@ export interface IUser {
   phone?: string;
   email: string;
   password: string;
-  address: {
-    region: string;
-    city: string;
-    postOffice: string;
-  };
   role: EUserRole;
-  cartId: string;
+  soldItem: string;
 }

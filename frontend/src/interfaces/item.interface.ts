@@ -1,7 +1,7 @@
 export interface IItem {
   _id: string;
-  category: string;
-  subCategory: string;
+  categoryId: string;
+  subCategoryId: string;
   nameItem: string;
   color: string;
   size: string;
@@ -9,4 +9,11 @@ export interface IItem {
   material: string;
   season: string;
   count: number;
+}
+export interface IData {
+  page: number,
+  itemsCount: number,
+  itemsFound: number,
+  perPage: number,
+  data: [];
 }

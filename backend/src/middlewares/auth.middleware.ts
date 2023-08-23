@@ -36,7 +36,7 @@ class AuthMiddleware {
     next: NextFunction
   ): Promise<void> {
     try {
-      const refreshToken = req.get("Authorization");
+      const  refreshToken  = req.get("Refresh-Token");
       if (!refreshToken) {
         return next(new ApiError("No token", 401));
       }

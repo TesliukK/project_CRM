@@ -11,7 +11,7 @@ import { ItemValidator } from "../validators";
 
 const router = Router();
 
-router.get("/", itemController.getAll);
+router.get("/",  authMiddleware.checkAccessToken, itemController.getAll, authMiddleware.checkAccessToken);
 
 router.post(
   "/",

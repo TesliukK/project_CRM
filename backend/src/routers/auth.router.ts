@@ -4,8 +4,8 @@ import { authController } from "../controllers";
 import { EActionTokenType } from "../enums";
 import {
   authMiddleware,
-  commonMiddleware,
-  userMiddleware,
+  commonMiddleware, roleMiddleware,
+  userMiddleware
 } from "../middlewares";
 import { UserValidator } from "../validators";
 
@@ -13,6 +13,7 @@ const router = Router();
 
 router.post(
   "/register",
+  roleMiddleware.checkAdminRole,
   commonMiddleware.isBodyValid(UserValidator.createUser),
   userMiddleware.getDynamicallyAndThrow("email", "body"),
   authController.register

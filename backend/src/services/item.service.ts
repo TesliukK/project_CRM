@@ -14,7 +14,7 @@ class ItemService {
 
       const {
         page = 1,
-        limit = 5,
+        limit = 20,
         sortedBy = "createdAt",
         ...searchObject
       } = queryObj;

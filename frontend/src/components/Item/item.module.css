@@ -1,11 +1,32 @@
 .itemCard {
-    width: 300px;
-    height: 400px;
-    background: bisque;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px 0 20px;
+    align-items: center;
+    width: 95%;
+    height: 75px;
+    background: #FFFFFF;
     text-align: center;
-    margin: 10px;
+    margin: 10px 0 10px 0;
+    border-radius: 15px;
+    transition: 0.5s;
+}
+
+.itemDiv {
+    display: flex;
+    justify-content: center;
+    width: 15%;
+}
+
+.itemCard:hover{
+    background: #FFFFFF;
+    box-shadow: 16px 16px 32px #c8c8c8,
+    -16px -16px 32px #EAEBED;
 }
 
 .img {
-    width: 100px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #88AEE3;
 }

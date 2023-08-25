@@ -6,3 +6,4 @@ export * from './Login/Login';
 export * from "./Users/Users";
 export * from "./User/User";
 export * from "./ItemForm/ItemForm";
+export * from "./Menu/Menu";

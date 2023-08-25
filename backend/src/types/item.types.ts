@@ -8,10 +8,10 @@ export interface IItem {
   category: ICategory;
   subCategory: ISubCategory;
   nameItem: string;
+  brand: string;
   color: string;
   size: string;
   price: number;
   material: string;
-  season: string;
   count: number;
 }

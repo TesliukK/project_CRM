@@ -1,0 +1,31 @@
+.block {
+    width: 15%;
+    height: 100vh;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+}
+
+.menuBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 50px;
+    background: transparent;
+    margin: 5px 10px 5px 10px;
+    border-radius:  15px;
+    transition: 0.5s;
+}
+
+.menuBlock:hover{
+    background: #FFFFFF;
+    box-shadow: 16px 16px 32px #c8c8c8,
+    -16px -16px 32px #EAEBED;
+}
+
+a {
+    color: #18191d;
+    text-decoration: none;
+    transition-duration: 0.5s;
+}

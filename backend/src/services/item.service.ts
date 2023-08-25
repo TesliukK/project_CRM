@@ -14,7 +14,7 @@ class ItemService {
 
       const {
         page = 1,
-        limit = 20,
+        limit = 10,
         sortedBy = "createdAt",
         ...searchObject
       } = queryObj;
@@ -27,8 +27,10 @@ class ItemService {
         .sort(sortedBy)
         .lean();
       const itemsTotalCount = await Items.countDocuments(searchObject);
+      const totalPages = Math.ceil(itemsTotalCount / limit);
       return {
         page: +page,
+        totalPages: totalPages,
         itemsCount: itemsTotalCount,
         itemsFound: items.length,
         perPage: +limit,

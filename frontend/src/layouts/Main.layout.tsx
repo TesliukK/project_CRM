@@ -1,12 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Header } from "../components";
+
+import { Header, Sidebar } from "../components";
+import css from "./mainLayout.module.css"
 
 const MainLayout: FC = () => {
+
   return (
     <div>
       <Header/>
-      <Outlet />
+      <div className={css.block}>
+        <Sidebar/>
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -16,15 +16,17 @@ const Item: FC<IProps> = ({ item }) => {
 
   return (
     <div className={css.itemCard}>
-      <div>Назва товару: {nameItem}</div>
-      <div>color: {color}</div>
-      <div>count: {count}</div>
-      <div>material: {material}</div>
-      <div>price: {price}</div>
-      <div>size: {size}</div>
-      <button onClick={() => dispatch(itemAction.update({ id: item._id, item }))}>update</button>
-      <button onClick={() => dispatch(itemAction.remove(item._id))}>delete</button>
-
+      <div className={css.itemDiv}><img  className={css.img} src="https://st2.depositphotos.com/4845131/7223/v/450/depositphotos_72231685-stock-illustration-icon-hangers.jpg" alt="одяг" /></div>
+      <div className={css.itemDiv}>{nameItem}</div>
+      <div className={css.itemDiv}>{color}</div>
+      <div className={css.itemDiv}>{count}</div>
+      <div className={css.itemDiv}>{material}</div>
+      <div className={css.itemDiv}>{price}</div>
+      <div className={css.itemDiv}>{size}</div>
+      <div className={css.itemDiv}>
+        <button onClick={() => dispatch(itemAction.update({ id: item._id, item }))}>update</button>
+        <button onClick={() => dispatch(itemAction.remove(item._id))}>delete</button>
+      </div>
     </div>
   );
 };

@@ -27,8 +27,11 @@ class UserService {
         .sort(sortedBy)
         .lean();
       const usersTotalCount = await User.countDocuments(searchObject);
+
+      const totalPages = Math.ceil(usersTotalCount / limit);
       return {
         page: +page,
+        totalPages: totalPages,
         itemsCount: usersTotalCount,
         itemsFound: users.length,
         perPage: +limit,

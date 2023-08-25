@@ -8,6 +8,7 @@ export interface ICommonResponse<T> extends IMessage {
 
 export interface IPaginationResponse<T> {
   page: number;
+  totalPages: number;
   perPage: number;
   itemsCount: number;
   itemsFound: number;

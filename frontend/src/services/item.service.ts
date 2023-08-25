@@ -3,7 +3,7 @@ import { IData, IItem } from "../interfaces";
 import { apiService, IRes } from "./api.service";
 
 const itemService = {
-  getAll: (): IRes<IData> => apiService.get(urls.items.base),
+  getAll: (page=1): IRes<IData> => apiService.get(urls.items.base, {params:{page}}),
   create: (data:IItem) => apiService.post(urls.items.base, data),
   update: (id: string, data: Partial<IItem>): IRes<IItem> =>
     apiService.put(`${urls.items.base}/${id}`, data),

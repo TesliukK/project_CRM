@@ -3,6 +3,7 @@ export interface IItem {
   categoryId: string;
   subCategoryId: string;
   nameItem: string;
+  brand: string;
   color: string;
   size: string;
   price: number;
@@ -12,6 +13,7 @@ export interface IItem {
 }
 export interface IData {
   page: number,
+  totalPages: number,
   itemsCount: number,
   itemsFound: number,
   perPage: number,

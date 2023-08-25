@@ -5,19 +5,28 @@ import { itemService } from "../../services";
 
 interface IState {
   items: IItem[],
-  updateItem: IItem | null
+  updateItem: IItem | null,
+  page: number | null,
+  totalPages: number| null
 }
 
 const initialState: IState = {
   items: [],
-  updateItem: null
+  updateItem: null,
+  page: null,
+  totalPages: null
 };
+
+interface IGetAllPayload {
+  page: number;
+}
 
 const getAll = createAsyncThunk(
   "itemSlice/getAll",
-  async (_, thunkAPI) => {
+  async ({ page }: IGetAllPayload, thunkAPI) => {
     try {
-      const { data } = await itemService.getAll();
+      const { data } = await itemService.getAll(page);
+      const totalPages = data.totalPages;
       return data;
     } catch (e) {
       const err = e as AxiosError;
@@ -57,7 +66,7 @@ const remove = createAsyncThunk<void, string>(
   async (id, { dispatch,rejectWithValue }) => {
     try {
       await itemService.delete(id);
-      dispatch(getAll());
+      dispatch(getAll({page:2}))
     } catch (e) {
       const err = e as AxiosError;
       return rejectWithValue(err.response?.data);
@@ -75,8 +84,11 @@ const itemSlice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(getAll.fulfilled, (state, action) => {
-        const {data} = action.payload;
+        const {data,page,totalPages} = action.payload;
         state.items = data
+        state.page = page;
+        state.totalPages = totalPages;
+
       })
       .addCase(create.fulfilled, (state, action) => {
         state.items.push(action.payload)

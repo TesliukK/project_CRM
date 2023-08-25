@@ -1,9 +1,9 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { ItemForm, Users } from "./components";
+
 import { Categories } from "./components/Categories/Categories";
 import MainLayout from "./layouts/Main.layout";
-import { ItemPage, LoginPage, RegisterPage } from "./pages";
+import { ItemPage, LoginPage, RegisterPage, UserPage } from "./pages";
 
 const App = () => {
 
@@ -14,9 +14,7 @@ const App = () => {
         <Route index element={<Navigate to={'login'}/>}/>
         <Route path={'/'} element={<MainLayout/>}>
           <Route path={'items'} element= {<ItemPage/>}/>
-          <Route path={'register'} element={<RegisterPage/>}/>
-          <Route path={'users'} element={<Users/>}/>
-          <Route path={'createItem'} element={<ItemForm/>}/>
+          <Route path={'users'} element={<UserPage/>}/>
           <Route path={'categories'} element={<Categories/>}/>
         </Route>
       </Routes>

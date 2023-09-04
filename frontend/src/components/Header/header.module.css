@@ -1,10 +1,23 @@
 
 .header {
+    box-sizing: border-box;
     display: flex;
     width: 100%;
-    height: 70px;
+    height: 40px;
     justify-content: space-between;
     align-items: center;
-    background-color: #EAEBED;
+    background-color: #003a8c;
     padding: 10px 20px;
+}
+
+.block {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #FFFFFF;
+    font-family: cursive;
+}
+
+.enter {
+
 }

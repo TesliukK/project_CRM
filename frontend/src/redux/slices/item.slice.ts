@@ -7,14 +7,16 @@ interface IState {
   items: IItem[],
   updateItem: IItem | null,
   page: number | null,
-  totalPages: number| null
+  totalPages: number| null,
+  currentPage: number | null,
 }
 
 const initialState: IState = {
   items: [],
   updateItem: null,
   page: null,
-  totalPages: null
+  totalPages: null,
+  currentPage: null,
 };
 
 interface IGetAllPayload {
@@ -61,12 +63,12 @@ const update = createAsyncThunk<IItem, { id: string; item: Partial<IItem> }>(
   }
 );
 
-const remove = createAsyncThunk<void, string>(
+const remove = createAsyncThunk<void, { id: string, page: number }>(
   "itemSlice/remove",
-  async (id, { dispatch,rejectWithValue }) => {
+  async ({ id,page }, { dispatch, rejectWithValue }) => {
     try {
       await itemService.delete(id);
-      dispatch(getAll({page:2}))
+      dispatch(getAll({ page }));
     } catch (e) {
       const err = e as AxiosError;
       return rejectWithValue(err.response?.data);
@@ -78,30 +80,39 @@ const itemSlice = createSlice({
   name: 'itemSlice',
   initialState,
   reducers: {
-    // setCarForUpdate: (state, action) => {
-    //   state.updateItem = action.payload
+    setItemForUpdate: (state, action) => {
+      state.updateItem = action.payload;
     },
+  },
   extraReducers: builder =>
     builder
       .addCase(getAll.fulfilled, (state, action) => {
-        const {data,page,totalPages} = action.payload;
-        state.items = data
+        const { data, page, totalPages } = action.payload;
+        state.items = data;
         state.page = page;
         state.totalPages = totalPages;
-
+        state.currentPage = page;
       })
       .addCase(create.fulfilled, (state, action) => {
-        state.items.push(action.payload)
+        state.items.push(action.payload);
       })
+      .addCase(update.fulfilled, (state, action) => {
+        const updatedItem = action.payload;
+        const index = state.items.findIndex(item => item._id === updatedItem._id);
+        if (index !== -1) {
+          state.items[index] = updatedItem;
+        }
+      }),
 });
 
-const {reducer: itemReducer} = itemSlice;
+const {reducer: itemReducer,  actions: {setItemForUpdate}} = itemSlice;
 
 const itemAction = {
   getAll,
   create,
   update,
-  remove
+  remove,
+  setItemForUpdate
 };
 
 export {

@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.itemRouter = void 0;
+const express_1 = require("express");
+const controllers_1 = require("../controllers");
+const middlewares_1 = require("../middlewares");
+const validators_1 = require("../validators");
+const router = (0, express_1.Router)();
+router.get("/", middlewares_1.authMiddleware.checkAccessToken, controllers_1.itemController.getAll, middlewares_1.authMiddleware.checkAccessToken);
+router.post("/", middlewares_1.authMiddleware.checkAccessToken, middlewares_1.roleMiddleware.checkAdminRole, middlewares_1.commonMiddleware.isBodyValid(validators_1.ItemValidator.createItem), controllers_1.itemController.create);
+router.get("/:itemId", middlewares_1.authMiddleware.checkAccessToken, middlewares_1.roleMiddleware.checkAdminRole, middlewares_1.commonMiddleware.isIdValid("itemId"), middlewares_1.itemMiddleware.getByIdAndThrow, controllers_1.itemController.getById);
+router.put("/:itemId", middlewares_1.authMiddleware.checkAccessToken, middlewares_1.roleMiddleware.checkAdminRole, middlewares_1.commonMiddleware.isIdValid("itemId"), middlewares_1.commonMiddleware.isBodyValid(validators_1.ItemValidator.updateItem), middlewares_1.itemMiddleware.getByIdAndThrow, controllers_1.itemController.update);
+router.delete("/:itemId", middlewares_1.authMiddleware.checkAccessToken, middlewares_1.roleMiddleware.checkAdminRole, middlewares_1.commonMiddleware.isIdValid("itemId"), middlewares_1.itemMiddleware.getByIdAndThrow, controllers_1.itemController.delete);
+exports.itemRouter = router;

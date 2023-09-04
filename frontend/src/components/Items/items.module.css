@@ -1,17 +1,20 @@
 
 .nameBlock {
     width: 95%;
-    height: 30px;
+    position: relative;
+    height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px 0 20px;
-    background: #FFFFFF;
-    border-radius: 15px;
+    background: transparent;
+    border-bottom: 1px solid #c8c8c8;
+    border-right: 2px solid #c8c8c8;
+    color: #595959;
 }
 
 .par {
     display: flex;
     justify-content: center;
-    width: 15%;
+    width: 10%;
 }

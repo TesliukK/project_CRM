@@ -6,6 +6,7 @@ const Sidebar: FC = () => {
 
   return (
     <div className={css.block}>
+      <h2>Mirella Moda</h2>
       <NavLink to={"/items"}>
         <div className={css.menuBlock}>
           <b>Товар у наявності</b>

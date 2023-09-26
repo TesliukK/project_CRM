@@ -15,7 +15,7 @@ const cartSchema = new Schema(
   {
     versionKey: false,
     timestamps: true,
-  }
+  },
 );
 
 export const Cart = model<ICart>("cart", cartSchema);

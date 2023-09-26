@@ -7,7 +7,7 @@ class ItemController {
   public async getAll(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<IItem[]>> {
     try {
       const items = await itemService.getWithPagination(req.query as IQuery);
@@ -20,16 +20,10 @@ class ItemController {
   public async create(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<ICommonResponse<IItem>>> {
     try {
-      const { categoryId, subCategoryId } = req.body;
-      const item = await itemService.create(
-        req.body,
-        categoryId,
-        subCategoryId
-      );
-
+      const item = await itemService.create(req.body);
       return res.status(201).json(item);
     } catch (e) {
       next(e);
@@ -39,7 +33,7 @@ class ItemController {
   public async getById(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<IItem>> {
     try {
       const { item } = res.locals;
@@ -52,7 +46,7 @@ class ItemController {
   public async update(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<IItem>> {
     try {
       const { params, body } = req;
@@ -68,7 +62,7 @@ class ItemController {
   public async delete(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<void>> {
     try {
       const { itemId } = req.params;

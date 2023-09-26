@@ -11,18 +11,10 @@ class AuthService {
     try {
       const { password } = body;
       const hashedPassword = await passwordService.hash(password);
-       await User.create({
+      await User.create({
         ...body,
         password: hashedPassword,
       });
-
-      // const newCart = await Cart.create({ user: newUser._id, items: [] });
-      // newUser.cartId = newCart._id;
-      // await newUser.save();
-
-      // await Promise.all([
-      //   emailService.sendMail(body.email, EEmailActions.WELCOME),
-      // ]);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -30,12 +22,12 @@ class AuthService {
 
   public async login(
     credentials: ICredentials,
-    user: IUser
+    user: IUser,
   ): Promise<ITokenPair> {
     try {
       const isMatched = await passwordService.compare(
         credentials.password,
-        user.password
+        user.password,
       );
 
       if (!isMatched) {
@@ -59,7 +51,7 @@ class AuthService {
   }
   public async refresh(
     tokenInfo: ITokenPair,
-    jwtPayload: ITokenPayload
+    jwtPayload: ITokenPayload,
   ): Promise<ITokenPair> {
     try {
       const tokenPair = tokenService.generateTokenPair({
@@ -80,14 +72,14 @@ class AuthService {
   public async changePassword(
     userId: string,
     oldPassword: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<void> {
     try {
       const user = await User.findById(userId);
 
       const isMatched = await passwordService.compare(
         oldPassword,
-        user.password
+        user.password,
       );
 
       if (!isMatched) {
@@ -105,7 +97,7 @@ class AuthService {
     try {
       const actionToken = tokenService.generateActionToken(
         { _id: user._id },
-        EActionTokenType.forgot
+        EActionTokenType.forgot,
       );
       await Action.create({
         actionToken,
@@ -125,7 +117,7 @@ class AuthService {
   public async setForgotPassword(
     password: string,
     id: string,
-    token: string
+    token: string,
   ): Promise<void> {
     try {
       const hashedPassword = await passwordService.hash(password);
@@ -144,7 +136,7 @@ class AuthService {
     try {
       const actionToken = tokenService.generateActionToken(
         { _id: user._id },
-        EActionTokenType.activate
+        EActionTokenType.activate,
       );
       await Action.create({
         actionToken,
@@ -165,7 +157,7 @@ class AuthService {
       await Promise.all([
         User.updateOne(
           { _id: userId },
-          { $set: { status: EUserStatus.active } }
+          { $set: { status: EUserStatus.active } },
         ),
         Token.deleteMany({
           _user_id: userId,

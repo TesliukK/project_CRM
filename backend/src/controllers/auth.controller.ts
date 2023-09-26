@@ -17,7 +17,7 @@ class AuthController {
   public async login(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<ITokenPair>> {
     try {
       const { email, password } = req.body;
@@ -34,7 +34,7 @@ class AuthController {
   public async refresh(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<ITokenPair>> {
     try {
       const { tokenInfo, jwtPayload } = req.res.locals;
@@ -55,7 +55,7 @@ class AuthController {
       await authService.changePassword(
         tokenInfo._user_id,
         oldPassword,
-        newPassword
+        newPassword,
       );
 
       res.sendStatus(200);
@@ -67,7 +67,7 @@ class AuthController {
   public async forgotPassword(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const { user } = req.res.locals;
@@ -82,7 +82,7 @@ class AuthController {
   public async setForgotPassword(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const { password } = req.body;
@@ -91,7 +91,7 @@ class AuthController {
       await authService.setForgotPassword(
         password,
         tokenInfo._user_id,
-        req.params.token
+        req.params.token,
       );
 
       res.sendStatus(200);
@@ -103,7 +103,7 @@ class AuthController {
   public async sendActivateToken(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const { user } = req.res.locals;
@@ -118,7 +118,7 @@ class AuthController {
   public async activate(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const { _id } = req.res.locals.jwtPayload as ITokenPayload;

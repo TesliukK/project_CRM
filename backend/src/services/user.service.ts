@@ -4,12 +4,12 @@ import { IPaginationResponse, IQuery, IUser } from "../types";
 
 class UserService {
   public async getWithPagination(
-    query: IQuery
+    query: IQuery,
   ): Promise<IPaginationResponse<IUser>> {
     try {
       const queryStr = JSON.stringify(query);
       const queryObj = JSON.parse(
-        queryStr.replace(/\b(gte|lte|gt|lt)\b/, (match) => `$${match}`)
+        queryStr.replace(/\b(gte|lte|gt|lt)\b/, (match) => `$${match}`),
       );
 
       const {

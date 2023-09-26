@@ -1,17 +1,15 @@
 import { Types } from "mongoose";
 
-import { ICategory } from "./category.types";
-import { ISubCategory } from "./subCategory.types";
+import { EDepartment, EItemCategories } from "../enums";
 
 export interface IItem {
   _id?: Types.ObjectId;
-  category: ICategory;
-  subCategory: ISubCategory;
-  nameItem: string;
+  category: EItemCategories;
+  department: EDepartment;
+  itemName: string;
   brand: string;
-  color: string;
+  article: string;
   size: string;
   price: number;
-  material: string;
   count: number;
 }

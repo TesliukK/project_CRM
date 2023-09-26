@@ -17,7 +17,7 @@ const oldPasswordSchema = new Schema(
   {
     versionKey: false,
     timestamps: true,
-  }
+  },
 );
 
 export const OldPassword = model("OldPassword", oldPasswordSchema);

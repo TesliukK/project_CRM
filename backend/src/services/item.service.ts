@@ -1,15 +1,15 @@
 import { ApiError } from "../errors";
-import { Category, Items, SubCategory } from "../models";
+import { Items } from "../models";
 import { IItem, IPaginationResponse, IQuery } from "../types";
 
 class ItemService {
   public async getWithPagination(
-    query: IQuery
+    query: IQuery,
   ): Promise<IPaginationResponse<IItem>> {
     try {
       const queryStr = JSON.stringify(query);
       const queryObj = JSON.parse(
-        queryStr.replace(/\b(gte|lte|gt|lt)\b/, (match) => `$${match}`)
+        queryStr.replace(/\b(gte|lte|gt|lt)\b/, (match) => `$${match}`),
       );
 
       const {
@@ -40,25 +40,10 @@ class ItemService {
       throw new ApiError(e.message, e.status);
     }
   }
-  public async create(
-    data: IItem,
-    categoryId: string,
-    subCategoryId: string
-  ): Promise<any> {
+  public async create(data: IItem): Promise<any> {
     try {
-      const category = await Category.findById(categoryId);
-      if (!category) {
-        throw new ApiError("Category not found", 404);
-      }
-
-      const subCategory = await SubCategory.findById(subCategoryId);
-      if (!subCategory) {
-        throw new ApiError("subCategory not found", 404);
-      }
       return await Items.create({
         ...data,
-        category: category,
-        subCategory: subCategory,
       });
     } catch (e) {
       throw new ApiError(e.message, e.status);

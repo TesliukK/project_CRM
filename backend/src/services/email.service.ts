@@ -39,7 +39,7 @@ class EmailService {
   public async sendMail(
     email: string,
     emailAction: EEmailActions,
-    locals: Record<string, string> = {}
+    locals: Record<string, string> = {},
   ) {
     try {
       const templateInfo = allTemplates[emailAction];
@@ -47,7 +47,7 @@ class EmailService {
 
       const html = await this.templateParser.render(
         templateInfo.templateName,
-        locals
+        locals,
       );
 
       return this.transporter.sendMail({

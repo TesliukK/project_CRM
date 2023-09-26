@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+
 import { IItem } from "../../interfaces";
 import { itemService } from "../../services";
 
@@ -9,6 +10,7 @@ interface IState {
   page: number | null,
   totalPages: number| null,
   currentPage: number | null,
+  selectedItem: IItem| null,
 }
 
 const initialState: IState = {
@@ -17,6 +19,7 @@ const initialState: IState = {
   page: null,
   totalPages: null,
   currentPage: null,
+  selectedItem: null,
 };
 
 interface IGetAllPayload {
@@ -37,15 +40,15 @@ const getAll = createAsyncThunk(
   }
 );
 
-const create = createAsyncThunk<IItem, { item: IItem }>(
-  'itemSlice/create',
-  async ({item}, {rejectWithValue}) => {
+const create = createAsyncThunk<IItem, IItem>(
+  'item/createItem',
+  async (item, { rejectWithValue }) => {
     try {
-      const {data} = await itemService.create(item);
-      return data
+      const { data } = await itemService.create(item);
+      return data;
     } catch (e) {
       const err = e as AxiosError;
-      return rejectWithValue(err.response?.data)
+      return rejectWithValue(err.response?.data);
     }
   }
 );
@@ -83,6 +86,9 @@ const itemSlice = createSlice({
     setItemForUpdate: (state, action) => {
       state.updateItem = action.payload;
     },
+    setSelectedItem: (state, action) => {
+      state.selectedItem = action.payload;
+    },
   },
   extraReducers: builder =>
     builder
@@ -105,14 +111,15 @@ const itemSlice = createSlice({
       }),
 });
 
-const {reducer: itemReducer,  actions: {setItemForUpdate}} = itemSlice;
+const {reducer: itemReducer,  actions: {setItemForUpdate,setSelectedItem}} = itemSlice;
 
 const itemAction = {
   getAll,
   create,
   update,
   remove,
-  setItemForUpdate
+  setItemForUpdate,
+  setSelectedItem
 };
 
 export {

@@ -17,7 +17,7 @@ router.get(
   authMiddleware.checkAccessToken,
   commonMiddleware.isIdValid("userId"),
   userMiddleware.getByIdAndThrow,
-  userController.getById
+  userController.getById,
 );
 
 router.put(
@@ -26,7 +26,7 @@ router.put(
   commonMiddleware.isIdValid("userId"),
   commonMiddleware.isBodyValid(UserValidator.updateUser),
   userMiddleware.getByIdAndThrow,
-  userController.update
+  userController.update,
 );
 
 router.delete(
@@ -34,6 +34,6 @@ router.delete(
   authMiddleware.checkAccessToken,
   commonMiddleware.isIdValid("userId"),
   userMiddleware.getByIdAndThrow,
-  userController.delete
+  userController.delete,
 );
 export const userRouter = router;

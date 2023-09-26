@@ -11,14 +11,19 @@ import { ItemValidator } from "../validators";
 
 const router = Router();
 
-router.get("/",  authMiddleware.checkAccessToken, itemController.getAll, authMiddleware.checkAccessToken);
+router.get(
+  "/",
+  authMiddleware.checkAccessToken,
+  itemController.getAll,
+  authMiddleware.checkAccessToken,
+);
 
 router.post(
   "/",
   authMiddleware.checkAccessToken,
   roleMiddleware.checkAdminRole,
   commonMiddleware.isBodyValid(ItemValidator.createItem),
-  itemController.create
+  itemController.create,
 );
 
 router.get(
@@ -27,7 +32,7 @@ router.get(
   roleMiddleware.checkAdminRole,
   commonMiddleware.isIdValid("itemId"),
   itemMiddleware.getByIdAndThrow,
-  itemController.getById
+  itemController.getById,
 );
 
 router.put(
@@ -37,7 +42,7 @@ router.put(
   commonMiddleware.isIdValid("itemId"),
   commonMiddleware.isBodyValid(ItemValidator.updateItem),
   itemMiddleware.getByIdAndThrow,
-  itemController.update
+  itemController.update,
 );
 
 router.delete(
@@ -46,6 +51,7 @@ router.delete(
   roleMiddleware.checkAdminRole,
   commonMiddleware.isIdValid("itemId"),
   itemMiddleware.getByIdAndThrow,
-  itemController.delete
+  itemController.delete,
 );
+
 export const itemRouter = router;

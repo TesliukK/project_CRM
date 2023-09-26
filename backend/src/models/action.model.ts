@@ -22,7 +22,7 @@ const actionTokensSchema = new Schema(
   {
     versionKey: false,
     timestamps: true,
-  }
+  },
 );
 
 export const Action = model("ActionToken", actionTokensSchema);

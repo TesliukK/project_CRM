@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-import { EUserRole, EUserStatus } from "../enums";
+import { EUserRole } from "../enums";
 import { IUser } from "../types";
 
 const userSchema = new Schema(
@@ -32,27 +32,16 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Пароль є обов'язковим"],
     },
-    address: {
-      region: { type: String },
-      city: { type: String },
-      postOffice: { type: String },
-    },
-    status: {
-      type: String,
-      enum: EUserStatus,
-      default: EUserStatus.inactive,
-    },
     role: {
       type: String,
       enum: EUserRole,
       default: EUserRole.default,
     },
-    cartId: { type: Schema.Types.ObjectId, ref: "Cart" },
   },
   {
     versionKey: false,
     timestamps: true,
-  }
+  },
 );
 
 export const User = model<IUser>("user", userSchema);

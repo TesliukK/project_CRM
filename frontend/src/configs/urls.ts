@@ -2,6 +2,7 @@ const baseURL = "/api";
 
 const auth = '/auth'
 const items = "/items"
+const sold = "/sold"
 const users = "/users"
 const categories = "/categories"
 
@@ -17,11 +18,15 @@ const urls = {
     base: items,
     byId: (id: number): string => `${items}/${id}`
   },
+  sold: {
+    base: sold
+  },
   users: {
     base  : users
   },
   categories: {
-    base: categories
+    base: categories,
+    byId: (id: number): string => `${categories}/${id}`
   }
 };
 

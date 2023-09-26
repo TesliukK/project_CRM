@@ -7,3 +7,6 @@ export * from "./Users/Users";
 export * from "./User/User";
 export * from "./ItemForm/ItemForm";
 export * from "./Menu/Menu";
+export * from "./ItemDetails/ItemDetails";
+export * from "./SoldItem/SoldItem";
+export * from "./SoldItems/SoldItems";

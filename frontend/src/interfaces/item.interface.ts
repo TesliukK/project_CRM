@@ -1,16 +1,16 @@
 export interface IItem {
   _id: string;
-  categoryId: string;
-  subCategoryId: string;
-  nameItem: string;
+  category: string;
+  itemName: string;
   brand: string;
-  color: string;
+  article: string;
   size: string;
   price: number;
-  material: string;
-  season: string;
   count: number;
+  department: string;
+
 }
+
 export interface IData {
   page: number,
   totalPages: number,

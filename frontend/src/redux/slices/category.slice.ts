@@ -5,12 +5,14 @@ import { categoryService } from "../../services";
 
 interface IState {
   categories: ICategory[],
-  updateCategory: ICategory | null
+  updateCategory: ICategory | null,
+  selectedCategory: ICategory | null
 }
 
 const initialState: IState = {
   categories: [],
-  updateCategory: null
+  updateCategory: null,
+  selectedCategory: null
 };
 
 const getAll = createAsyncThunk(
@@ -55,7 +57,11 @@ const remove = createAsyncThunk<void, string>(
 const categorySlice = createSlice({
   name: "categorySlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedCategory: (state, action) => {
+      state.selectedCategory = action.payload;
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(getAll.fulfilled, (state, action) => {
@@ -66,12 +72,13 @@ const categorySlice = createSlice({
       })
 });
 
-const { reducer: categoryReducer } = categorySlice;
+const { reducer: categoryReducer,actions: {setSelectedCategory} } = categorySlice;
 
 const categoryAction = {
   getAll,
   create,
-  remove
+  remove,
+  setSelectedCategory
 };
 
 export {

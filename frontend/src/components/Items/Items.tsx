@@ -1,6 +1,7 @@
-import { Pagination, Button } from "@mui/material";
+import { Pagination } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { itemAction } from "../../redux";
@@ -11,10 +12,11 @@ const Items: FC = () => {
   const { items, page, totalPages } = useAppSelector(
     (state) => state.itemReducer
   );
+
   const [query, setQuery] = useSearchParams({ page: "1" });
   const dispatch = useAppDispatch();
-
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
 
   useEffect(() => {
     dispatch(itemAction.getAll({ page: Number(query.get("page")) }));
@@ -32,42 +34,99 @@ const Items: FC = () => {
     }
   };
 
+  const openDeleteConfirmation = () => {
+    setIsDeleteConfirmationOpen(true);
+  };
+  const closeDeleteConfirmation = () => {
+    setIsDeleteConfirmationOpen(false);
+  };
+
   const handleDeleteSelectedItems = () => {
+    openDeleteConfirmation();
+  };
+
+  const handleConfirmDelete = () => {
     selectedItems.forEach((itemId) => {
       dispatch(itemAction.remove({ id: itemId, page: Number(query.get("page")) }));
     });
     setSelectedItems([]);
+    closeDeleteConfirmation();
   };
 
   return (
     <div className={css.block}>
-      <button
-        onClick={handleDeleteSelectedItems}
-        disabled={selectedItems.length === 0}
-      >
-        Видалити вибрані
-      </button>
+
+      {isDeleteConfirmationOpen && (
+        <div className={css.overlay}>
+          <div className={css.deleteConfirmation}>
+            <div className={css.confirmationContainer}>
+              {`Ви впевнені, що хочете видалити наступні товари?`}
+              <div>
+                <div className={css.itemTable}>
+                  <div className={css.confirmName}>
+                    <div>артикул</div>
+                    <div>назва</div>
+                    <div>бренд</div>
+                  </div>
+                  {selectedItems.map((itemId) => {
+                    const item = items.find((item) => item._id === itemId);
+                    return item ? (
+                      <div key={itemId} className={css.deleteInfo}>
+                        <div className={css.deleteInfoBlock}>{item.article}</div>
+                        <div className={css.deleteInfoBlock}>{item.itemName}</div>
+                        <div className={css.deleteInfoBlock}>{item.brand}</div>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+              <div className={css.confirmationButtons}>
+                <button onClick={handleConfirmDelete} className={css.delete}>Підтвердити</button>
+                <button onClick={closeDeleteConfirmation} className={css.cancel}>Скасувати</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      )}
+
       <div className={css.nameBlock}>
-        <div className={css.par}></div>
+        <div className={css.par}>
+          <div className={css.deleteBlock}>
+            <button
+              className={css.deleteBtn}
+              onClick={handleDeleteSelectedItems}
+              disabled={selectedItems.length === 0}
+            >
+              <DeleteIcon />
+            </button>
+          </div>
+        </div>
         <div className={css.par}>
           <b>назва</b>
         </div>
         <div className={css.par}>
-          <b>колір</b>
+          <b>бренд</b>
+        </div>
+        <div className={css.par}>
+          <b>артикул</b>
+        </div>
+        <div className={css.par}>
+          <b>розмір</b>
         </div>
         <div className={css.par}>
           <b>кількість</b>
         </div>
         <div className={css.par}>
-          <b>матеріал</b>
-        </div>
-        <div className={css.par}>
           <b>ціна</b>
         </div>
         <div className={css.par}>
-          <b>розмір</b>
+          <b>категорія</b>
         </div>
-        <div className={css.par}></div>
+        <div className={css.par}>
+          <b>відділ</b>
+        </div>
       </div>
 
       <div>
@@ -91,7 +150,7 @@ const Items: FC = () => {
             (totalPages !== null && page >= totalPages + 1)
           }
           color="standard"
-          shape="circular"
+          shape="rounded"
           size="large"
           showFirstButton
           showLastButton

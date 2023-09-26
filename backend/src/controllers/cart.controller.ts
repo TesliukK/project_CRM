@@ -7,12 +7,12 @@ class CartController {
   public async getCartItemsForUser(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<ICartItem[]>> {
     try {
       const { tokenInfo } = res.locals;
       const cartItems = await cartService.getCartItemsForUser(
-        tokenInfo._user_id
+        tokenInfo._user_id,
       );
       return res.json(cartItems);
     } catch (e) {
@@ -23,14 +23,14 @@ class CartController {
   public async addToCart(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<ICartItem[]>> {
     try {
       const { tokenInfo } = res.locals;
       const newItem = req.body;
       const cartItems = await cartService.addToCart(
         tokenInfo._user_id,
-        newItem
+        newItem,
       );
       return res.json(cartItems);
     } catch (e) {
@@ -41,14 +41,14 @@ class CartController {
   public async removeFromCart(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<ICartItem[]>> {
     try {
       const { tokenInfo } = res.locals;
       // const { productId } = req.params;
       // Викликаємо метод removeFromCart з сервісу
       const cartItems = await cartService.removeFromCart(
-        tokenInfo._user_id
+        tokenInfo._user_id,
         // productId
       );
 

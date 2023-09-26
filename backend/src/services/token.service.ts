@@ -22,7 +22,7 @@ class TokenService {
 
   public generateActionToken(
     payload: IActionTokenPayload,
-    tokenType: EActionTokenType
+    tokenType: EActionTokenType,
   ): string {
     let secret = "";
     switch (tokenType) {
@@ -55,7 +55,7 @@ class TokenService {
 
   public checkToken(
     token: string,
-    tokenType = ETokenType.access
+    tokenType = ETokenType.access,
   ): ITokenPayload {
     try {
       let secret = "";

@@ -8,7 +8,7 @@ const router = Router();
 router.get(
   "/",
   authMiddleware.checkAccessToken,
-  cartController.getCartItemsForUser
+  cartController.getCartItemsForUser,
 );
 
 router.post("/add", authMiddleware.checkAccessToken, cartController.addToCart);
@@ -16,6 +16,6 @@ router.post("/add", authMiddleware.checkAccessToken, cartController.addToCart);
 router.delete(
   "/remove/:productId",
   authMiddleware.checkAccessToken,
-  cartController.removeFromCart
+  cartController.removeFromCart,
 );
 export const cartRouter = router;

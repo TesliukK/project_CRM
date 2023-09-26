@@ -8,7 +8,7 @@ class UserMiddleware {
   public async getByIdAndThrow(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const { userId } = req.params;
@@ -29,7 +29,7 @@ class UserMiddleware {
   public getDynamicallyAndThrow(
     fieldName: string,
     from: "body" | "query" | "params" = "body",
-    dbField: keyof IUser = "email"
+    dbField: keyof IUser = "email",
   ) {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {
@@ -41,8 +41,8 @@ class UserMiddleware {
           return next(
             new ApiError(
               `User with email ${fieldName} ${fieldValue} already exist`,
-              409
-            )
+              409,
+            ),
           );
         }
         next();
@@ -55,7 +55,7 @@ class UserMiddleware {
   public getDynamicallyOrThrow(
     fieldName: string,
     from: "body" | "query" | "params" = "body",
-    dbField: keyof IUser = "email"
+    dbField: keyof IUser = "email",
   ) {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {

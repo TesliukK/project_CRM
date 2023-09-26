@@ -7,7 +7,7 @@ class ItemMiddleware {
   public async getByIdAndThrow(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const { itemId } = req.params;

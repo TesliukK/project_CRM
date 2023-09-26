@@ -2,27 +2,57 @@
     box-sizing: border-box;
     width: 15%;
     height: 100vh;
-    background: #d9d9d9;
+    background: #0f1419;
     display: flex;
     flex-direction: column;
-    padding-right: 4px;
 }
 
 .menuBlock {
+    margin-left: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     height: 50px;
-    color: #595959;
+    color: #fcffff;
+    transition: 0.5s;
 }
 
 .menuBlock:hover{
-    border-right: 4px solid #1890ff;
-    color: #1890ff;
+    color: #3ca3e0;
 }
 
 a {
     text-decoration: none;
-    transition-duration: 0.5s;
+}
+
+.h2{
+    color: #fcffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px solid #242e39;
+}
+
+.logout {
+    margin-top: auto;
+}
+
+.signIn {
+    color: #fcffff ;
+    margin-left: 20px;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    transition: 0.5s;
+}
+
+.signIn:hover {
+    color: #3ca3e0;
+}
+
+.icon {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px 0 10px;
 }

@@ -9,7 +9,7 @@ class AuthMiddleware {
   public async checkAccessToken(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const accessToken = req.get("Authorization");
@@ -33,16 +33,16 @@ class AuthMiddleware {
   public async checkRefreshToken(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
-      const  refreshToken  = req.get("Refresh-Token");
+      const refreshToken = req.get("Refresh-Token");
       if (!refreshToken) {
         return next(new ApiError("No token", 401));
       }
       const jwtPayload = tokenService.checkToken(
         refreshToken,
-        ETokenType.refresh
+        ETokenType.refresh,
       );
       const tokenInfo = await Token.findOne({ refreshToken });
 
@@ -80,7 +80,7 @@ class AuthMiddleware {
   public async checkOldPassword(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) {
     try {
       const { body } = req;
@@ -96,15 +96,15 @@ class AuthMiddleware {
         oldPasswords.map(async (record) => {
           const isMatched = await passwordService.compare(
             body.password,
-            record.password
+            record.password,
           );
           if (isMatched) {
             throw new ApiError(
               "Your new password is the same as your old!",
-              409
+              409,
             );
           }
-        })
+        }),
       );
 
       next();

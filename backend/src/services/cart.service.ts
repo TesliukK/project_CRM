@@ -14,7 +14,7 @@ class CartService {
 
   public async addToCart(
     userId: string,
-    newItem: ICartItem
+    newItem: ICartItem,
   ): Promise<ICartItem[]> {
     try {
       const cart = await Cart.findOne({ user: userId });
@@ -32,7 +32,7 @@ class CartService {
   }
 
   public async removeFromCart(
-    userId: string
+    userId: string,
     // productId: string
   ): Promise<ICartItem[]> {
     try {

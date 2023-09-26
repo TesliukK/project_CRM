@@ -8,7 +8,7 @@ class RoleMiddleware {
   public async checkAdminRole(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<void> {
     try {
       const accessToken = req.get("Authorization");
@@ -28,7 +28,7 @@ class RoleMiddleware {
 
       if (user.role !== EUserRole.admin) {
         return next(
-          new ApiError("Недостатньо прав для створення товару.", 403)
+          new ApiError("Недостатньо прав для створення товару.", 403),
         );
       }
 

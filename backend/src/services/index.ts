@@ -4,5 +4,4 @@ export * from "./password.service";
 export * from "./token.service";
 export * from "./auth.service";
 export * from "./item.service";
-export * from "./category.service";
-export * from "./subCategory.service";
+export * from "./sold.item.service";

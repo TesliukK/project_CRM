@@ -1,20 +1,21 @@
 import { model, Schema } from "mongoose";
 
+import { EDepartment, EItemCategories } from "../enums";
 import { IItem } from "../types";
 
 const itemSchema = new Schema(
   {
     category: {
-      type: Schema.Types.ObjectId,
-      ref: "Category",
+      type: String,
+      enum: EItemCategories,
       required: true,
     },
-    subCategory: {
-      type: Schema.Types.ObjectId,
-      ref: "SubCategory",
+    department: {
+      type: String,
+      enum: EDepartment,
       required: true,
     },
-    nameItem: {
+    itemName: {
       type: String,
       trim: true,
       required: true,
@@ -24,9 +25,8 @@ const itemSchema = new Schema(
       trim: true,
       required: true,
     },
-    color: {
+    article: {
       type: String,
-      trim: true,
       required: true,
     },
     size: {
@@ -39,10 +39,6 @@ const itemSchema = new Schema(
       trim: true,
       required: true,
     },
-    material: {
-      type: String,
-      trim: true,
-    },
     count: {
       type: Number,
       required: true,
@@ -51,7 +47,7 @@ const itemSchema = new Schema(
   {
     versionKey: false,
     timestamps: true,
-  }
+  },
 );
 
 export const Items = model<IItem>("item", itemSchema);

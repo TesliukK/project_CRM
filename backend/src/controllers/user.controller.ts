@@ -7,7 +7,7 @@ class UserController {
   public async getAll(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<IUser[]>> {
     try {
       const users = await userService.getWithPagination(req.query as IQuery);
@@ -20,7 +20,7 @@ class UserController {
   public async getById(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<IUser>> {
     try {
       const { user } = res.locals;
@@ -33,7 +33,7 @@ class UserController {
   public async update(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<IUser>> {
     try {
       const { params, body } = req;
@@ -49,7 +49,7 @@ class UserController {
   public async delete(
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): Promise<Response<void>> {
     try {
       const { userId } = req.params;

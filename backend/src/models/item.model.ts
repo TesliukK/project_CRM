@@ -43,10 +43,13 @@ const itemSchema = new Schema(
       type: Number,
       required: true,
     },
+    createAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     versionKey: false,
-    timestamps: true,
   },
 );
 

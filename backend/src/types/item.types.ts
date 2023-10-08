@@ -12,4 +12,5 @@ export interface IItem {
   size: string;
   price: number;
   count: number;
+  createAt: Date;
 }

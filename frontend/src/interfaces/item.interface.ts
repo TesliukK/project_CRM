@@ -8,7 +8,7 @@ export interface IItem {
   price: number;
   count: number;
   department: string;
-
+  createAt: string;
 }
 
 export interface IData {
@@ -18,4 +18,11 @@ export interface IData {
   itemsFound: number,
   perPage: number,
   data: [];
+}
+
+export interface IQuery {
+  page: string;
+  limit: string;
+  sortedBy: string;
+  [key: string]: string;
 }

@@ -54,13 +54,13 @@ class SoldItemService {
         throw new Error("Товар не знайдено");
       }
 
-      const sellerId = currentUser._id;
+      const seller = currentUser;
       const soldAt = new Date().toLocaleString("en-US", {
         timeZone: "Europe/Kiev",
       });
       const soldItem = new SoldItem({
         item: existingItem,
-        sellerId,
+        seller,
         price,
         quantity,
         soldAt,

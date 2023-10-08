@@ -10,3 +10,4 @@ export * from "./Menu/Menu";
 export * from "./ItemDetails/ItemDetails";
 export * from "./SoldItem/SoldItem";
 export * from "./SoldItems/SoldItems";
+export * from "./SoldItemForm/SoldItemForm";

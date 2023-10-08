@@ -17,6 +17,29 @@ class ItemController {
       next(e);
     }
   }
+  public async searchItems(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response<IItem[]>> {
+    try {
+      const { query } = req;
+      const searchText = query.search as string; // Отримуємо текстовий запит для пошуку
+
+      // Викликаємо метод служби для отримання списку предметів з урахуванням пошуку
+      const items = await itemService.searchItems({
+        page: query.page as string,
+        limit: query.limit as string,
+        sortedBy: query.sortedBy as string,
+        search: searchText,
+      });
+
+      return res.json(items);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   public async create(
     req: Request,
     res: Response,

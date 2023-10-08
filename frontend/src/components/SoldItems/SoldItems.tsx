@@ -1,10 +1,9 @@
 import { Pagination } from "@mui/material";
 import React, { FC, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { soldItemAction } from "../../redux";
-
-
 import { SoldItem } from "../SoldItem/SoldItem";
 
 const SoldItems: FC = () => {

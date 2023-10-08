@@ -18,6 +18,13 @@ router.get(
   authMiddleware.checkAccessToken,
 );
 
+router.get(
+  "/itemSearch",
+  authMiddleware.checkAccessToken,
+  itemController.searchItems,
+  authMiddleware.checkAccessToken,
+);
+
 router.post(
   "/",
   authMiddleware.checkAccessToken,

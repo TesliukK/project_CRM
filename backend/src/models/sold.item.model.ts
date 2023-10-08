@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 
 import { ISoldItem } from "../types";
 
@@ -9,8 +9,19 @@ const soldItemSchema = new Schema(
       required: true,
       ref: "Items",
     },
-    sellerId: {
-      type: Schema.Types.ObjectId,
+    seller: {
+      _id: {
+        type: Types.ObjectId,
+      },
+      firstName: {
+        type: String,
+      },
+      secondName: {
+        type: String,
+      },
+      email: {
+        type: String,
+      },
     },
     price: {
       type: Number,

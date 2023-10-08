@@ -45,16 +45,6 @@ const Sidebar: FC = () => {
           </div>
         </div>
       </NavLink>
-      <NavLink to={"/categories"}>
-        <div className={css.menuBlock}>
-          <div className={css.icon}>
-            <CategoryIcon />
-          </div>
-          <div className={css.icon}>
-            <b>Категорії</b>
-          </div>
-        </div>
-      </NavLink>
       <NavLink to={"/sold"}>
         <div className={css.menuBlock}>
           <div className={css.icon}>

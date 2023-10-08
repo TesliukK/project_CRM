@@ -18,7 +18,6 @@ const ItemDetails: FC = () => {
   const { updateItem } = useAppSelector((state) => state.itemReducer);
   const dispatch = useAppDispatch();
   const [savedItem, setSavedItem] = useState<IItem | null>(null);
-  const { categories } = useAppSelector((state) => state.categoryReducer);
 
   useEffect(() => {
     // Збереження вибраного елемента в локальному сховищі після зміни selectedItem

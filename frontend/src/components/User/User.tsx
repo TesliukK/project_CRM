@@ -1,9 +1,8 @@
 import React, { FC, ReactNode } from "react";
 import { useAppDispatch } from "../../hooks";
 
-import { IItem, IUser } from "../../interfaces";
-import { itemAction, userAction } from "../../redux";
-import css from "./item.module.css";
+import { IUser } from "../../interfaces";
+import { userAction } from "../../redux";
 
 interface IProps {
   user: IUser,
@@ -11,7 +10,7 @@ interface IProps {
 }
 
 const User: FC<IProps> = ({ user }) => {
-  const { _id,firstName,secondName,phone,role } = user;
+  const { firstName,secondName,phone,role } = user;
   const dispatch = useAppDispatch();
 
   return (

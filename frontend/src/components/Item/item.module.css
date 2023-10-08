@@ -19,6 +19,13 @@
     justify-content: center;
     width: 10%;
 }
+.Mirella {
+    color: #efc21d;
+}
+
+.MiniMax {
+    color: #2890fd;
+}
 
 .itemCard:hover{
     background: #e6f7ff;

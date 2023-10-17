@@ -1,19 +1,18 @@
-import { Pagination } from "@mui/material";
-import React, { FC, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, {FC, useEffect, useState} from "react";
+import {useSearchParams} from "react-router-dom";
+import {Pagination} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { itemAction } from "../../redux";
-import { Item } from "../Item/Item";
+import {useAppDispatch, useAppSelector} from "../../hooks";
+import {itemAction} from "../../redux";
+import {Item} from "../Item/Item";
 import css from "./items.module.css";
+import {SearchComponent} from "../SearchBar/SearchBar";
 
 const Items: FC = () => {
-  const { items, page, totalPages } = useAppSelector(
-    (state) => state.itemReducer
-  );
+  const {items, page, totalPages} = useAppSelector((state) => state.itemReducer);
 
-  const [query, setQuery] = useSearchParams({ page: "1" });
+  const [query, setQuery] = useSearchParams({page: "1"});
   const dispatch = useAppDispatch();
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isDeleteConfirmationOpen, setIsDeleteConfirmationOpen] = useState(false);
@@ -23,59 +22,42 @@ const Items: FC = () => {
   useEffect(() => {
     const currentSortOption = query.get("sortedBy") || "createAt";
     setSortedBy(currentSortOption);
-
-    // Отримайте значення searchQuery з параметру пошуку
     const searchQueryParam = query.get("search");
     setSearchQuery(searchQueryParam || "");
 
-    // Виконайте запит на сервер тільки тоді, коли searchQuery не порожній
-    if (searchQueryParam) {
-      dispatch(
-        itemAction.getAll({
-          page: Number(query.get("page")),
-          sortedBy: currentSortOption,
-          search: searchQueryParam,
-        })
-      );
-    } else {
-      // Якщо searchQuery порожній, ви можете відобразити всі айтеми
-      // або виконати інші дії за вашим власним бажанням
-      dispatch(
-        itemAction.getAll({
-          page: Number(query.get("page")),
-          sortedBy: currentSortOption,
-          search: searchQuery || "", // Додаємо searchQuery або порожній рядок, якщо searchQuery порожній
-        })
-      );
-    }
+    dispatch(
+      itemAction.getAll({
+        page: Number(query.get("page")),
+        sortedBy: currentSortOption,
+        search: searchQueryParam || "",
+      })
+    );
   }, [dispatch, query]);
 
-  const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const handleSearch = () => {
-    setQuery({ page: "1", sortedBy, search: searchQuery });
-  };
-
   const handleClearSearch = () => {
-    setSearchQuery("");
-    setQuery({ page: "1", sortedBy, search: "" });
+    setSearchQuery(""); // Очистити значення пошуку
+    setQuery({ page: "1", sortedBy, search: "" }); // Скинути параметр пошуку
+  };
+
+  const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newSearchQuery = event.target.value;
+    setSearchQuery(newSearchQuery);
+    setQuery({page: "1", sortedBy, search: newSearchQuery});
   };
 
   const handleSortChange = (newSortOption: string) => {
     setSortedBy(newSortOption);
-    setQuery({ page: "1", sortedBy: newSortOption });
+    setQuery({page: "1", sortedBy: newSortOption, search: searchQuery});
   };
 
   const sortOptions = [
-    { value: "createAt", label: "Даті додавання" },
-    { value: "price", label: "Ціна" },
-    { value: "quantity", label: "Кількість" },
+    {value: "createAt", label: "Даті додавання"},
+    {value: "price", label: "Ціна"},
+    {value: "count", label: "Кількість"},
   ];
 
   const handlePageChange = (newPage: number) => {
-    setQuery({ page: newPage.toString() });
+    setQuery({page: newPage.toString(), sortedBy, search: searchQuery});
   };
 
   const handleItemSelection = (itemId: string) => {
@@ -89,6 +71,7 @@ const Items: FC = () => {
   const openDeleteConfirmation = () => {
     setIsDeleteConfirmationOpen(true);
   };
+
   const closeDeleteConfirmation = () => {
     setIsDeleteConfirmationOpen(false);
   };
@@ -103,8 +86,8 @@ const Items: FC = () => {
         itemAction.remove({
           id: itemId,
           page: Number(query.get("page")),
-          sortedBy: "",
-          search: "",
+          sortedBy,
+          search: searchQuery,
         })
       );
     });
@@ -114,14 +97,14 @@ const Items: FC = () => {
 
   return (
     <div className={css.block}>
-      <input
-        type="text"
-        placeholder="Пошук"
-        value={searchQuery}
-        onChange={handleSearchInputChange}
-      />
-      <button onClick={handleSearch}>Пошук</button>
-      <button onClick={handleClearSearch}>Скинути пошук</button>
+      <div className={css.searchBlock}>
+        <SearchComponent
+          searchQuery={searchQuery}
+          handleSearchInputChange={handleSearchInputChange}
+          handleClearSearch={handleClearSearch}
+        />
+      </div>
+
       <select
         value={sortedBy}
         onChange={(e) => handleSortChange(e.target.value)}
@@ -158,8 +141,12 @@ const Items: FC = () => {
                 </div>
               </div>
               <div className={css.confirmationButtons}>
-                <button onClick={handleConfirmDelete} className={css.delete}>Підтвердити</button>
-                <button onClick={closeDeleteConfirmation} className={css.cancel}>Скасувати</button>
+                <button onClick={handleConfirmDelete} className={css.delete}>
+                  Підтвердити
+                </button>
+                <button onClick={closeDeleteConfirmation} className={css.cancel}>
+                  Скасувати
+                </button>
               </div>
             </div>
           </div>
@@ -174,7 +161,7 @@ const Items: FC = () => {
               onClick={handleDeleteSelectedItems}
               disabled={selectedItems.length === 0}
             >
-              <DeleteIcon />
+              <DeleteIcon/>
             </button>
           </div>
         </div>
@@ -238,4 +225,4 @@ const Items: FC = () => {
   );
 };
 
-export { Items };
+export {Items};

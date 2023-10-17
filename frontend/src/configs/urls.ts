@@ -16,7 +16,7 @@ const urls = {
   },
   items: {
     base: items,
-    byId: (id: number): string => `${items}/${id}`
+    byId: (id: number): string => `${items}/${id}`,
   },
   sold: {
     base: sold

@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { ItemForm, SoldItems } from "./components";
+import {ItemForm, SoldItems} from "./components";
 
 import MainLayout from "./layouts/Main.layout";
 import { ItemInfoPage, ItemPage, LoginPage, UserPage } from "./pages";

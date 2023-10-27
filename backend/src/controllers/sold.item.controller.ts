@@ -25,7 +25,7 @@ class SoldItemController {
   public async addToSold(req: Request, res: Response): Promise<void> {
     try {
       const { itemId, price, quantity } = req.body;
-      const accessToken = req.get("Authorization"); // Отримайте ідентифікатор продавця з системи аутентифікації
+      const accessToken = req.get("Authorization");
       const tokenInfo = await Token.findOne({ accessToken });
       const user = await User.findById(tokenInfo._user_id);
       const soldItem = await soldItemService.addToSold(

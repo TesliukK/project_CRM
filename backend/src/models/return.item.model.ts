@@ -1,13 +1,13 @@
 import { model, Schema } from "mongoose";
 
-import { IReturnItem } from "../types"; // Переконайтеся, що шлях правильний, і імпортовано правильний тип
+import { IReturnItem } from "../types";
 
 const returnItemSchema = new Schema<IReturnItem>(
   {
     item: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: "Item", // Посилання на модель товару (може бути інше, якщо у вас інакша назва моделі)
+      ref: "Item",
     },
     quantity: {
       type: Number,

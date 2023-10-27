@@ -11,9 +11,7 @@ class ItemController {
   ): Promise<Response<IItem[]>> {
     try {
       const { query } = req;
-      const searchText = query.search as string; // Отримуємо текстовий запит для пошуку
-
-      // Викликаємо метод служби для отримання списку предметів з урахуванням пошуку
+      const searchText = query.search as string;
       const items = await itemService.getAllAndSearch({
         page: query.page as string,
         limit: query.limit as string,

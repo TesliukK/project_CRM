@@ -5,7 +5,7 @@ services:
     build:
       context: .
     env_file:
-      - backend/.env
+      - .env
     ports:
       - "5555:5000"
     volumes:
@@ -17,7 +17,7 @@ services:
   db:
     image: mongo
     env_file:
-      - backend/.env
+      - .env
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
       - ./mongo_db:/data/db

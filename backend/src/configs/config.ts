@@ -1,6 +1,6 @@
 export const configs = {
   PORT: process.env.PORT || 5001,
-  DB_URL: process.env.DB_URL || "mongosdcmjc",
+  DB_URL: process.env.DB_URL || "mongodb://user:user@db:27017/MirellaModa",
   HOST: "0.0.0.0",
 
   FRONT_URL: process.env.FRONT_URL,
